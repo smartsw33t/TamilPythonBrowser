@@ -4,32 +4,31 @@ import json
 import sqlite3
 
 from PyQt5.QtGui import QFontDatabase, QIcon, QFont
-
 from PyQt5.QtWidgets import QApplication
 import browser.main_window
 
 
 # DB to open
 connection = sqlite3.connect("BrowserLocalDB.db", check_same_thread=False)
-# connection = sqlite3.connect(":memory:")
 cursor = connection.cursor()
 
-# Font
-textFont = QFont("Times", 14)
+# Set base UI font with Unicode/Tamil fallback
+textFont = QFont("Nirmala UI", 13)
+textFont.setStyleHint(QFont.SansSerif)
 
-if os.path.isfile("settings.json"):  # If settings file exists, then open it
+if os.path.isfile("settings.json"):
     with open("settings.json", "r") as f:
         settings_data = json.load(f)
-else:  # If settings not exists, then create a new file with default settings
+else:
     json_data = json.loads(
-    """
-    {
-        "defaultSearchEngine": "Google",
-        "startupPage": "https://browser-new-tab.netlify.app",
-        "newTabPage": "https://browser-new-tab.netlify.app",
-        "homeButtonPage": "https://browser-new-tab.netlify.app"
-    }
-    """
+        """
+        {
+            "defaultSearchEngine": "Google",
+            "startupPage": "https://www.google.co.in",
+            "newTabPage": "https://www.google.co.in",
+            "homeButtonPage": "https://www.google.co.in"
+        }
+        """
     )
     with open("settings.json", "w") as f:
         json.dump(json_data, f, indent=2)
@@ -43,8 +42,8 @@ def main():
     # Disable shortcut in context menu
     gui_app.styleHints().setShowShortcutsInContextMenus(False)
 
-    # Set the window name
-    QApplication.setApplicationName("Simple Web Browser")
+    # Set the localized window name
+    QApplication.setApplicationName("தமிழ் உலாவி")
 
     # Set the window icon
     QApplication.setWindowIcon(QIcon(os.path.join("resources", "logos", "browser.png")))
