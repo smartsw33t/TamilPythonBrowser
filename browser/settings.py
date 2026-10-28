@@ -18,146 +18,115 @@ class UserSettings(QtWidgets.QWidget):
         self.retranslateUi()
 
     def init_ui(self):
-        self.resize(706, 485)
+        self.resize(720, 500)
+        self.setWindowTitle("அமைப்புகள்")
+
+        # Base Tamil font setup
+        tamil_font = QtGui.QFont("Nirmala UI", 10)
+        tamil_font.setStyleHint(QtGui.QFont.SansSerif)
+        self.setFont(tamil_font)
+
         self.addDefaultSearchEngineSelector()
 
-        self.title_label_size = 10
-
-        # Add settings title
+        # Settings heading
         self.label_2 = QtWidgets.QLabel(self.mainWidget)
-        self.label_2.setGeometry(QtCore.QRect(10, 10, 71, 21))
-        font = QtGui.QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(self.title_label_size)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(50)
-        self.label_2.setFont(font)
-        self.label_2.setStyleSheet('font: 12pt "Segoe UI";')
+        self.label_2.setGeometry(QtCore.QRect(15, 10, 180, 30))
+        header_font = QtGui.QFont("Nirmala UI", 13, QtGui.QFont.Bold)
+        header_font.setStyleHint(QtGui.QFont.SansSerif)
+        self.label_2.setFont(header_font)
         self.label_2.setObjectName("label_2")
 
-        # self.check_box_enable = QtWidgets.QCheckBox("Use same page used in home button in all", self.mainWidget)
-        # self.check_box_enable.setGeometry(QtCore.QRect(10, 130, 70, 17))
+        # 1. Search Engine Section
+        self.label = QtWidgets.QLabel(self.mainWidget)
+        self.label.setGeometry(QtCore.QRect(15, 60, 300, 24))
+        section_font = QtGui.QFont("Nirmala UI", 10, QtGui.QFont.Bold)
+        section_font.setStyleHint(QtGui.QFont.SansSerif)
+        self.label.setFont(section_font)
+        self.label.setObjectName("label")
+
+        self.label_5 = QtWidgets.QLabel(self.mainWidget)
+        self.label_5.setGeometry(QtCore.QRect(15, 88, 440, 22))
+        self.label_5.setFont(tamil_font)
+        self.label_5.setObjectName("label_5")
+
+        # 2. On Startup Section
+        self.label_3 = QtWidgets.QLabel(self.mainWidget)
+        self.label_3.setGeometry(QtCore.QRect(15, 140, 300, 24))
+        self.label_3.setFont(section_font)
+        self.label_3.setObjectName("label_3")
+
+        self.label_4 = QtWidgets.QLabel(self.mainWidget)
+        self.label_4.setGeometry(QtCore.QRect(15, 168, 440, 22))
+        self.label_4.setFont(tamil_font)
+        self.label_4.setObjectName("label_4")
 
         self.startup_page = QtWidgets.QLineEdit(self.mainWidget)
-        self.startup_page.setGeometry(QtCore.QRect(480, 150, 211, 33))
+        self.startup_page.setGeometry(QtCore.QRect(470, 155, 230, 33))
+        self.startup_page.setFont(tamil_font)
         self.startup_page.setText(self.settings_data["startupPage"])
         self.startup_page.setObjectName("startup_page")
 
-        # On startup section
-        self.label_3 = QtWidgets.QLabel(self.mainWidget)
-        self.label_3.setGeometry(QtCore.QRect(10, 130, 91, 21))
-        font = QtGui.QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(self.title_label_size)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_3.setFont(font)
-        self.label_3.setObjectName("label_3")
-
-        self.label = QtWidgets.QLabel(self.mainWidget)
-        self.label.setGeometry(QtCore.QRect(10, 60, 171, 21))
-        font = QtGui.QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(self.title_label_size)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label.setFont(font)
-        self.label.setObjectName("label")
-
-        # Home button section
+        # 3. Home Button Section
         self.label_7 = QtWidgets.QLabel(self.mainWidget)
-        self.label_7.setGeometry(QtCore.QRect(10, 230, 101, 21))
-        font = QtGui.QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(self.title_label_size)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_7.setFont(font)
+        self.label_7.setGeometry(QtCore.QRect(15, 230, 300, 24))
+        self.label_7.setFont(section_font)
         self.label_7.setObjectName("label_7")
 
-        # Home button page input
+        self.label_6 = QtWidgets.QLabel(self.mainWidget)
+        self.label_6.setGeometry(QtCore.QRect(15, 258, 440, 22))
+        self.label_6.setFont(tamil_font)
+        self.label_6.setObjectName("label_6")
+
         self.home_button_page = QtWidgets.QLineEdit(self.mainWidget)
-        self.home_button_page.setGeometry(QtCore.QRect(480, 230, 211, 33))
+        self.home_button_page.setGeometry(QtCore.QRect(470, 245, 230, 33))
+        self.home_button_page.setFont(tamil_font)
         self.home_button_page.setText(self.settings_data["homeButtonPage"])
         self.home_button_page.setObjectName("home_button_page")
 
-        # New tab open settings
+        # 4. New Tab Section (சாளரப்பிரிவு)
         self.label_9 = QtWidgets.QLabel(self.mainWidget)
-        self.label_9.setGeometry(QtCore.QRect(10, 330, 101, 21))
-        font = QtGui.QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(self.title_label_size)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_9.setFont(font)
+        self.label_9.setGeometry(QtCore.QRect(15, 320, 300, 24))
+        self.label_9.setFont(section_font)
         self.label_9.setObjectName("label_9")
 
-        # Page to open on each tab
+        self.label_8 = QtWidgets.QLabel(self.mainWidget)
+        self.label_8.setGeometry(QtCore.QRect(15, 348, 440, 22))
+        self.label_8.setFont(tamil_font)
+        self.label_8.setObjectName("label_8")
+
         self.new_tab_page = QtWidgets.QLineEdit(self.mainWidget)
+        self.new_tab_page.setGeometry(QtCore.QRect(470, 335, 230, 33))
+        self.new_tab_page.setFont(tamil_font)
         self.new_tab_page.setText(self.settings_data["newTabPage"])
-        self.new_tab_page.setGeometry(QtCore.QRect(480, 360, 211, 33))
         self.new_tab_page.setObjectName("new_tab_page")
 
-        # these are all descriptions
-        self.label_4 = QtWidgets.QLabel(self.mainWidget)
-        self.label_4.setGeometry(QtCore.QRect(10, 160, 235, 20))
-        self.label_4.setObjectName("label_4")
-        font = QtGui.QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(10)
-        self.label_4.setFont(font)
-
-        self.label_5 = QtWidgets.QLabel(self.mainWidget)
-        self.label_5.setGeometry(QtCore.QRect(10, 90, 270, 20))
-        self.label_5.setObjectName("label_5")
-        font = QtGui.QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(10)
-        self.label_5.setFont(font)
-
-        self.label_6 = QtWidgets.QLabel(self.mainWidget)
-        self.label_6.setGeometry(QtCore.QRect(10, 260, 360, 20))
-        self.label_6.setObjectName("label_6")
-        font = QtGui.QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(10)
-        self.label_6.setFont(font)
-
-        self.label_8 = QtWidgets.QLabel(self.mainWidget)
-        self.label_8.setGeometry(QtCore.QRect(10, 360, 320, 20))
-        self.label_8.setObjectName("label_8")
-        font = QtGui.QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(10)
-        self.label_8.setFont(font)
-
-        # Save button
-        self.save_settings = QtWidgets.QPushButton(self.mainWidget)
-        self.save_settings.setGeometry(QtCore.QRect(572, 440, 121, 33))
-        self.save_settings.setObjectName("save_settings")
-        self.save_settings.clicked.connect(self.saveChangesToJson)
-
-        # Discard button
+        # Buttons
         self.discard_changes = QtWidgets.QPushButton(self.mainWidget)
-        self.discard_changes.setGeometry(QtCore.QRect(430, 440, 121, 33))
+        self.discard_changes.setGeometry(QtCore.QRect(410, 440, 140, 36))
+        self.discard_changes.setFont(tamil_font)
         self.discard_changes.setObjectName("discard_changes")
         self.discard_changes.clicked.connect(self.closeWindow)
 
+        self.save_settings = QtWidgets.QPushButton(self.mainWidget)
+        self.save_settings.setGeometry(QtCore.QRect(560, 440, 140, 36))
+        self.save_settings.setFont(tamil_font)
+        self.save_settings.setObjectName("save_settings")
+        self.save_settings.clicked.connect(self.saveChangesToJson)
+
         QtCore.QMetaObject.connectSlotsByName(self.mainWidget)
 
-        with open(
-            os.path.join("styles", "settings_style.css")
-        ) as f:  # Read styles from settings_style.css
-            self.setStyleSheet(f.read())
+        if os.path.isfile(os.path.join("styles", "settings_style.css")):
+            with open(os.path.join("styles", "settings_style.css")) as f:
+                self.setStyleSheet(f.read())
 
-    # Add drop-down menu to select default search engine
     def addDefaultSearchEngineSelector(self):
         self.searchEngineSelector = QtWidgets.QComboBox(self.mainWidget)
         self.searchEngineSelector.setEnabled(True)
-        self.searchEngineSelector.setGeometry(QtCore.QRect(480, 80, 211, 33))
+        self.searchEngineSelector.setGeometry(QtCore.QRect(470, 70, 230, 33))
+        combo_font = QtGui.QFont("Nirmala UI", 10)
+        combo_font.setStyleHint(QtGui.QFont.SansSerif)
+        self.searchEngineSelector.setFont(combo_font)
 
-        # Search engines
         self.searchEngineSelector.addItem("Google")
         self.searchEngineSelector.addItem("Yahoo")
         self.searchEngineSelector.addItem("Bing")
@@ -173,28 +142,23 @@ class UserSettings(QtWidgets.QWidget):
         elif self.default_search_engine == "DuckDuckGo":
             self.searchEngineSelector.setCurrentIndex(3)
 
-    # Write to json
-
-    def saveChangesToJson(self):  # startup pg
+    def saveChangesToJson(self):
         if len(self.startup_page.text()) > 0:
             self.settings_data["startupPage"] = self.startup_page.text()
-            with open("settings.json", "w") as f:
-                json.dump(self.settings_data, f, indent=2)
 
         if len(self.home_button_page.text()) > 0:
             self.settings_data["homeButtonPage"] = self.home_button_page.text()
-            with open("settings.json", "w") as f:
-                json.dump(self.settings_data, f, indent=2)
 
         if len(self.new_tab_page.text()) > 0:
             self.settings_data["newTabPage"] = self.new_tab_page.text()
-            with open("settings.json", "w") as f:
-                json.dump(self.settings_data, f, indent=2)
+
+        with open("settings.json", "w") as f:
+            json.dump(self.settings_data, f, indent=2)
+
+        self.close()
 
     def addDropDownItemToJson(self):
-        self.settings_data[
-            "defaultSearchEngine"
-        ] = self.searchEngineSelector.currentText()
+        self.settings_data["defaultSearchEngine"] = self.searchEngineSelector.currentText()
         with open("settings.json", "w") as f:
             json.dump(self.settings_data, f, indent=2)
 
@@ -203,24 +167,33 @@ class UserSettings(QtWidgets.QWidget):
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
-        self.label_2.setText(_translate("Form", "Settings"))
-        self.label_3.setText(_translate("Form", "On startup"))
-        self.save_settings.setText(_translate("Form", "Save settings"))
-        self.label.setText(_translate("Form", "Default Search Engine"))
-        self.label_4.setText(
-            _translate("Form", "Choose what page to display on startup")
-        )
+        self.setWindowTitle(_translate("Form", "அமைப்புகள்"))
+        self.label_2.setText(_translate("Form", "அமைப்புகள்"))
+
+        # தேடல் பொறி
+        self.label.setText(_translate("Form", "இயல்புநிலைத் தேடல் பொறி"))
         self.label_5.setText(
-            _translate("Form", "Default search engine used in the address bar")
+            _translate("Form", "முகவரிப் பட்டியில் இயல்பாகப் பயன்படுத்த வேண்டிய தேடல் பொறி")
         )
+
+        # தொடக்கம்
+        self.label_3.setText(_translate("Form", "தொடக்கத்தில்"))
+        self.label_4.setText(
+            _translate("Form", "உலாவி தொடங்கும் போது காட்டப்பட வேண்டிய வலைப்பக்கம்")
+        )
+
+        # முகப்புப் பொத்தான்
+        self.label_7.setText(_translate("Form", "முகப்புப் பொத்தான்"))
         self.label_6.setText(
-            _translate(
-                "Form", "Choose what page to navigate when home button is pressed"
-            )
+            _translate("Form", "முகப்புப் பொத்தானை அழுத்தும்போது திறக்க வேண்டிய பக்கம்")
         )
-        self.label_7.setText(_translate("Form", "Home button"))
+
+        # சாளரப்பிரிவு
+        self.label_9.setText(_translate("Form", "புதிய சாளரப்பிரிவு"))
         self.label_8.setText(
-            _translate("Form", "Choose what page to show when a new tab is opened")
+            _translate("Form", "புதிய சாளரப்பிரிவு திறக்கப்படும் போது காட்ட வேண்டிய பக்கம்")
         )
-        self.label_9.setText(_translate("Form", "New tab"))
-        self.discard_changes.setText(_translate("Form", "Discard changes"))
+
+        # பொத்தான்கள்
+        self.discard_changes.setText(_translate("Form", "மாற்றங்களை விலக்குக"))
+        self.save_settings.setText(_translate("Form", "அமைப்புகளைச் சேமித்திடுக"))
