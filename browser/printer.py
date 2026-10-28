@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QObject, pyqtSlot, QEventLoop, QPointF
-from PyQt5.QtGui import QPainter
+from PyQt5.QtGui import QPainter, QFont
 from PyQt5.QtPrintSupport import QPrinter, QPrintDialog, QPrintPreviewDialog
 from PyQt5.QtWidgets import QDialog, QProgressDialog, QProgressBar
 
@@ -19,6 +19,7 @@ class PrintHandler(QObject):
     def print(self):
         printer = QPrinter(QPrinter.HighResolution)
         dialog = QPrintDialog(printer, self.m_page.view())
+        dialog.setWindowTitle("பக்கத்தை அச்சிடுக")
         if dialog.exec_() != QDialog.Accepted:
             return
         self.printDocument(printer)
@@ -32,6 +33,7 @@ class PrintHandler(QObject):
         self.m_inPrintPreview = True
         printer = QPrinter()
         preview = QPrintPreviewDialog(printer, self.m_page.view())
+        preview.setWindowTitle("அச்சு முன்னோட்டம்")
         preview.paintRequested.connect(self.printDocument)
         preview.exec()
         self.m_inPrintPreview = False
@@ -46,10 +48,16 @@ class PrintHandler(QObject):
             result = success
             loop.quit()
 
-        # progressbar to show loading
+        # Localized progress dialog
         progressbar = QProgressDialog(self.m_page.view())
+        progressbar.setWindowTitle("ஆயத்தமாகிறது...")
+        progress_font = QFont("Nirmala UI", 10)
+        progress_font.setStyleHint(QFont.SansSerif)
+        progressbar.setFont(progress_font)
+
         progressbar.findChild(QProgressBar).setTextVisible(False)
-        progressbar.setLabelText("Please wait...")
+        progressbar.setLabelText("காத்திருக்கவும்...")
+        progressbar.setCancelButtonText("நிறுத்துக")
         progressbar.setRange(0, 0)
         progressbar.show()
         progressbar.canceled.connect(loop.quit)
@@ -60,10 +68,10 @@ class PrintHandler(QObject):
         if not result:
             painter = QPainter()
             if painter.begin(printer):
-                font = painter.font()
-                font.setPixelSize(20)
+                font = QFont("Nirmala UI", 12)
+                font.setStyleHint(QFont.SansSerif)
                 painter.setFont(font)
                 painter.drawText(
-                    QPointF(10, 25), "We could not generate print preview."
+                    QPointF(10, 25), "அச்சு முன்னோட்டத்தை உருவாக்க இயலவில்லை."
                 )
                 painter.end()
