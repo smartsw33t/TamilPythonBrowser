@@ -24,8 +24,17 @@ class AboutDialog(QDialog):
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
 
-        with open(os.path.join("styles", "about_style.css")) as f:
-            self.button_box.button(QDialogButtonBox.Ok).setStyleSheet(f.read())
+        # Set default Tamil text for the OK action
+        ok_button = self.button_box.button(QDialogButtonBox.Ok)
+        ok_button.setText("சரி")
+
+        if os.path.isfile(os.path.join("styles", "about_style.css")):
+            with open(os.path.join("styles", "about_style.css")) as f:
+                ok_button.setStyleSheet(f.read())
+
+        # Base Tamil font setup
+        tamil_font = QFont("Nirmala UI")
+        tamil_font.setStyleHint(QFont.SansSerif)
 
         logo = QLabel()
         pixmap = QPixmap(os.path.join("resources", "logos", "browser.png"))
@@ -33,24 +42,32 @@ class AboutDialog(QDialog):
         logo.setPixmap(pixmap)
         self.layout.addWidget(logo)
 
-        title = QLabel("Simple Web Browser")
-        title.setFont(QFont("Times", 20))
-
+        # Localized Title
+        title = QLabel("தமிழ் உலாவி")
+        title_font = QFont(tamil_font)
+        title_font.setPointSize(18)
+        title_font.setBold(True)
+        title.setFont(title_font)
         self.layout.addWidget(title)
 
+        # Version & Upstream Attribution
         lbl1 = QLabel(
-            '<center>Version 2.4<br>Copyright ©2021 Made by <a href="https://github.com/saminsakur">Samin Sakur</a>.</center>'
+            '<center>பதிப்பு 1.0.0<br>'
+            'ஆரம்ப உருவாக்கம்: <a href="https://github.com/saminsakur/PyQt5BrowserBuild">Samin Sakur</a><br>'
+            'தமிழ் உருவாக்கம்: <a href="https://github.com/smartsw33t">Jayaseelan Samuel</a></center>'
         )
-        lbl1.setFont(QFont("Times", 10))
+        body_font = QFont(tamil_font)
+        body_font.setPointSize(11)
+        lbl1.setFont(body_font)
         lbl1.setOpenExternalLinks(True)
         self.layout.addWidget(lbl1)
 
+        # Repository / Learn More Link
         github_pg = QLabel(
-            '<a href="https://github.com/saminsakur/PyQt5BrowserBuild">Learn More </a>'
+            '<a href="https://github.com/smartsw33t/TamilPythonBrowser">மேலும் அறிக </a>'
         )
-
-        font = QFont("Font Awesome 5 Free Solid", 10)
-        github_pg.setFont(font)
+        link_font = QFont("Font Awesome 5 Free Solid", 11)
+        github_pg.setFont(link_font)
         github_pg.setOpenExternalLinks(True)
         self.layout.addWidget(github_pg)
 
@@ -62,7 +79,7 @@ class AboutDialog(QDialog):
         self.setLayout(self.layout)
 
         self.setWindowFlags(Qt.MSWindowsFixedSizeDialogHint)
-        self.resize(400, 250)
-        self.setMaximumHeight(300)
-        self.setMaximumWidth(500)
-        self.setWindowTitle("About")
+        self.resize(420, 280)
+        self.setMaximumHeight(320)
+        self.setMaximumWidth(520)
+        self.setWindowTitle("அறிமுகம்")
