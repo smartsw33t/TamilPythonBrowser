@@ -9,34 +9,37 @@ class HistoryWindow(QWidget):
     def __init__(self):
         super().__init__()
 
-        titleLbl = QLabel("History")
+        self.setWindowTitle("இதுவரை")
+
+        titleLbl = QLabel("இதுவரை")
         titleLbl.setFont(browser.textFont)
 
-        clearBtn = QPushButton("Clear")
+        clearBtn = QPushButton("துடைத்திடுக")
         clearBtn.setObjectName("ClearButnHistory")
         clearBtn.setFont(browser.textFont)
         clearBtn.clicked.connect(self.clearHistory)
 
         self.historyList = QListWidget()
-        # self.historyList.horizontalScrollBar().setEnabled(False)
+        self.historyList.setFont(browser.textFont)
 
         self.fillHistoryList()
 
         self.historyList.itemClicked.connect(self.goClickedLink)
 
-        with open(os.path.join("styles", "history_style.css")) as f:
-            style = f.read()
-            clearBtn.setStyleSheet(style)
-            self.historyList.setStyleSheet(style)
-            self.historyList.horizontalScrollBar().setStyleSheet(style)
-            self.historyList.verticalScrollBar().setStyleSheet(style)
+        if os.path.isfile(os.path.join("styles", "history_style.css")):
+            with open(os.path.join("styles", "history_style.css")) as f:
+                style = f.read()
+                clearBtn.setStyleSheet(style)
+                self.historyList.setStyleSheet(style)
+                self.historyList.horizontalScrollBar().setStyleSheet(style)
+                self.historyList.verticalScrollBar().setStyleSheet(style)
 
         layout = QGridLayout()
 
         layout.addWidget(titleLbl, 0, 0)
         layout.addWidget(clearBtn, 0, 1)
         layout.addWidget(self.historyList, 1, 0, 1, 2)
-        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setContentsMargins(10, 10, 10, 10)
         self.setLayout(layout)
 
     def fillHistoryList(self):
