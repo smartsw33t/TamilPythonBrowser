@@ -15,13 +15,18 @@ class AddressBar(QLineEdit):
         self.selectAll()
 
     def initAddressBar(self):
-        # Set the placeholder text
-        self.setPlaceholderText("Search or enter web address")
+        # Set localized font and placeholder
+        tamil_font = QFont("Nirmala UI", 10)
+        tamil_font.setStyleHint(QFont.SansSerif)
+        self.setFont(tamil_font)
+
+        self.setPlaceholderText("தேடுக அல்லது வலை முகவரியை நிரப்புக")
 
         # Set focus to the address bar
         self.setFocus()
-        with open(os.path.join("styles", "addr_bar.css")) as f:
-            self.setStyleSheet(f.read())
+        if os.path.isfile(os.path.join("styles", "addr_bar.css")):
+            with open(os.path.join("styles", "addr_bar.css")) as f:
+                self.setStyleSheet(f.read())
 
 
 class SSLIcon(QLabel):
@@ -31,8 +36,10 @@ class SSLIcon(QLabel):
 
     def InitSSLIcon(self):
         self.setObjectName("SSLIcon")
-        icon = QPixmap(os.path.join("resources", "lock-icon.png"))
-        self.setPixmap(icon)
+        icon_path = os.path.join("resources", "lock-icon.png")
+        if os.path.isfile(icon_path):
+            icon = QPixmap(icon_path)
+            self.setPixmap(icon)
 
 
 class Tabs(QTabWidget):
@@ -40,21 +47,20 @@ class Tabs(QTabWidget):
         super().__init__()
         self.setDocumentMode(True)
 
-        # Set the tabs closable
+        # Set the tabs closable & movable
         self.setTabsClosable(True)
-
-        # Set the tabs movable
         self.setMovable(True)
 
-        # Add font family
-        font = QFont("Segoe UI", 8)
-        self.setFont(font)
+        # Localized font for tab headers
+        tab_font = QFont("Nirmala UI", 9)
+        tab_font.setStyleHint(QFont.SansSerif)
+        self.setFont(tab_font)
 
-        # Add some styles to the tabs
-        with open(
-            os.path.join("styles", "tab_style.css")
-        ) as f:  # Open tab_styles.css file
-            self.setStyleSheet(f.read())
+        # Add styles to tabs
+        tab_style_path = os.path.join("styles", "tab_style.css")
+        if os.path.isfile(tab_style_path):
+            with open(tab_style_path) as f:
+                self.setStyleSheet(f.read())
 
 
 class customWebEnginePage(QWebEnginePage):
