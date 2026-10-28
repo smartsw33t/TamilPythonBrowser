@@ -59,20 +59,20 @@ class mainWindow(QMainWindow):
             )"""
         )
 
-        # Add new tab when tab tab is doubleclicked
+        # Add new tab when tab is doubleclicked
         self.tabs.tabBarDoubleClicked.connect(self.tab_open_doubleclick)
 
-        # To connect to a function when current tab has been changed
+        # Connect to function when current tab changes
         self.tabs.currentChanged.connect(self.tab_changed)
 
-        # Function to handle tab closing
+        # Handle tab closing
         self.tabs.tabCloseRequested.connect(self.close_current_tab)
 
-        # open new tab when Ctrl+T pressed
+        # open new tab on Ctrl+T
         AddNewTabKeyShortcut = QShortcut("Ctrl+T", self)
         AddNewTabKeyShortcut.activated.connect(
             lambda: self.add_new_tab(
-                QtCore.QUrl(browser.settings_data["newTabPage"], "New tab")
+                QtCore.QUrl(browser.settings_data["newTabPage"]), "புதிய பிரிவு"
             )
         )
 
@@ -82,33 +82,33 @@ class mainWindow(QMainWindow):
             lambda: self.close_current_tab(self.tabs.currentIndex())
         )
 
-        # Exit browser on shortcut Ctrl+Shift+W
+        # Exit browser on Ctrl+Shift+W
         ExitBrowserShortcutKey = QShortcut("Ctrl+Shift+W", self)
         ExitBrowserShortcutKey.activated.connect(sys.exit)
 
-        # nav bar
+        # Navigation bar
         self.navbar = QToolBar()
         self.navbar.setMovable(False)
         self.addToolBar(self.navbar)
 
-        # back button
+        # Back button
         back_btn = QPushButton(self)
         back_btn.setObjectName("back_btn")
         back_btn.setIcon(
             QtGui.QIcon(os.path.join("resources", "icons", "left-arrow.png"))
         )
-        back_btn.setToolTip("Back to previous page")
+        back_btn.setToolTip("முந்தைய பக்கத்திற்குச் செல்ல")
         back_btn.setShortcut("Alt+Left")
         back_btn.clicked.connect(self.navigate_back_tab)
         self.navbar.addWidget(back_btn)
 
-        # forward button
+        # Forward button
         forward_butn = QPushButton(self)
         forward_butn.setObjectName("forward_butn")
         forward_butn.setIcon(
             QtGui.QIcon(os.path.join("resources", "icons", "right-arrow.png"))
         )
-        forward_butn.setToolTip("Go forward")
+        forward_butn.setToolTip("அடுத்த பக்கத்திற்குச் செல்ல")
         forward_butn.setShortcut("Alt+Right")
         forward_butn.clicked.connect(self.forward_tab)
         self.navbar.addWidget(forward_butn)
@@ -116,7 +116,7 @@ class mainWindow(QMainWindow):
         # Refresh button
         self.reload_butn = QPushButton(self)
         self.reload_butn.setObjectName("reload_butn")
-        self.reload_butn.setToolTip("Reload current page")
+        self.reload_butn.setToolTip("பக்கத்தைப் புதுப்பிக்க")
         self.reload_butn.setShortcut("Ctrl+R")
         self.reload_butn.resize(QSize(50, 50))
         self.reload_butn.setIcon(
@@ -124,30 +124,28 @@ class mainWindow(QMainWindow):
         )
         self.reload_butn.clicked.connect(self.reload_tab)
 
+        # Stop button
         self.stop_btn = QPushButton(self)
         self.stop_btn.setObjectName("stop_butn")
-        self.stop_btn.setToolTip("Stop loading current page")
+        self.stop_btn.setToolTip("பக்கம் ஏற்றப்படுவதை நிறுத்த")
         self.stop_btn.setShortcut("Escape")
         self.stop_btn.setIcon(QIcon(os.path.join("resources", "icons", "cross.png")))
         self.stop_btn.clicked.connect(self.stop_loading_tab)
 
-        # Added stop button
         self.stop_action = self.navbar.addWidget(self.stop_btn)
-
-        # Added reload button
         self.reload_action = self.navbar.addWidget(self.reload_butn)
 
         # Home button
         self.home_button = QPushButton(self)
         self.home_button.setObjectName("home_button")
-        self.home_button.setToolTip("Back to home")
+        self.home_button.setToolTip("முகப்புப் பக்கத்திற்குச் செல்ல")
         self.home_button.setIcon(
             QtGui.QIcon(os.path.join("resources", "icons", "home.png"))
         )
         self.home_button.clicked.connect(self.goToHome)
         self.navbar.addWidget(self.home_button)
 
-        # Add Address bar
+        # Address bar
         self.url_bar = browser.widgets.AddressBar()
         self.url_bar.initAddressBar()
         self.url_bar.setFrame(False)
@@ -155,162 +153,130 @@ class mainWindow(QMainWindow):
         self.url_bar.setShortcutEnabled(True)
         self.url_bar.setToolTip(self.url_bar.text())
 
-        # Set focus on the Addressbar by pressing Ctrl+E
         FocusOnAddressBar = QShortcut("Ctrl+E", self)
         FocusOnAddressBar.activated.connect(self.url_bar.setFocus)
 
-        # Set stop action to be invisible
         self.stop_action.setVisible(False)
-
-        # Add a separator
         self.navbar.addSeparator()
 
-        # Shows ssl security icon
+        # SSL status icon
         self.httpsicon = browser.widgets.SSLIcon()
-
-        # Add http icon to the navbar bar
         self.navbar.addWidget(self.httpsicon)
-
-        # Add Address Bar to the navbar
         self.navbar.addWidget(self.url_bar)
 
-        # The context menu
+        # Context Menu
         context_menu = QMenu(self)
-
-        # Set the object's name
         context_menu.setObjectName("ContextMenu")
 
-        # Button for the three dot context menu button
         ContextMenuButton = QPushButton(self)
         ContextMenuButton.setObjectName("ContextMenuButton")
-
-        # Enable three dot menu by pressing Alt+F
         ContextMenuButton.setShortcut("Alt+F")
-
-        # Give the three dot image to the Qpushbutton
         ContextMenuButton.setIcon(
             QIcon(os.path.join("resources", "icons", "more.png"))
-        )  # Add icon
+        )
         ContextMenuButton.setObjectName("ContextMenuTriggerButn")
-        ContextMenuButton.setToolTip("More")
-
-        # Add the context menu to the three dot context menu button
+        ContextMenuButton.setToolTip("மேலும் தேர்வுசெய்யக்கூடியவை")
         ContextMenuButton.setMenu(context_menu)
 
-        """Actions of the three dot context menu"""
-
-        # Add new tab
-        newTabAction = QAction("New tab", self)
+        # Actions of context menu
+        newTabAction = QAction("புதிய சாளரப்பிரிவு", self)
         newTabAction.setIcon(
             QtGui.QIcon(os.path.join("resources", "icons", "newtab.png"))
         )
         newTabAction.triggered.connect(
             lambda: self.add_new_tab(
-                QUrl(browser.settings_data["newTabPage"]), "Homepage"
+                QUrl(browser.settings_data["newTabPage"]), "முகப்பு"
             )
         )
-        newTabAction.setToolTip("Add a new tab")
+        newTabAction.setToolTip("புதிய சாளரப்பிரிவைத் திறக்க")
         context_menu.addAction(newTabAction)
 
-        # New window action
-        newWindowAction = QAction("New window", self)
+        newWindowAction = QAction("புதிய சாளரம்", self)
         newWindowAction.setIcon(
             QtGui.QIcon(os.path.join("resources", "icons", "app_window_ios.png"))
         )
         newWindowAction.triggered.connect(self.CreateNewWindow)
         context_menu.addAction(newWindowAction)
 
-        # Close tab action
-        CloseTabAction = QAction("Close tab", self)
+        CloseTabAction = QAction("சாளரப்பிரிவை மூடுக", self)
         CloseTabAction.setIcon(
             QIcon(os.path.join("resources", "icons", "closetab.png"))
         )
         CloseTabAction.triggered.connect(
             lambda: self.close_current_tab(self.tabs.currentIndex())
         )
-        CloseTabAction.setToolTip("Close current tab")
+        CloseTabAction.setToolTip("நடப்பு சாளரப்பிரிவை மூட")
         context_menu.addAction(CloseTabAction)
 
-        # A separator
+        context_menu.addSeparator()
         context_menu.addSeparator()
 
-        # Another separator
-        context_menu.addSeparator()
-
-        # Feature to copy site url
         CopySiteAddress = QAction(
             QtGui.QIcon(os.path.join("resources", "icons", "url.png")),
-            "Copy site url",
+            "தளத்தின் பிணைப்பை நகலெடு",
             self,
         )
         CopySiteAddress.triggered.connect(self.CopySiteLink)
-        CopySiteAddress.setToolTip("Copy current site address")
+        CopySiteAddress.setToolTip("நடப்புத் தளத்தின் பிணைப்பை நகலெடுக்க")
         context_menu.addAction(CopySiteAddress)
 
-        # Fetaure to go to copied site url
         PasteAndGo = QAction(
             QtGui.QIcon(os.path.join("resources", "icons", "paste.png")),
-            "Paste and go",
+            "ஒட்டிச் செல்",
             self,
         )
         PasteAndGo.triggered.connect(self.PasteUrlAndGo)
-        PasteAndGo.setToolTip("Go to the an url copied to your clipboard")
+        PasteAndGo.setToolTip("எடுத்துவைத்த பிணைப்பிற்கு நேரடியாகச் செல்ல")
         context_menu.addAction(PasteAndGo)
 
-        # A separator
         context_menu.addSeparator()
 
-        # View history
-        ViewHistory = QAction("History", self)
+        # View History ("இதுவரை")
+        ViewHistory = QAction("இதுவரை", self)
         ViewHistory.setIcon(QIcon(os.path.join("resources", "icons", "history.png")))
         ViewHistory.triggered.connect(self.openHistory)
         ViewHistory.setShortcut("Ctrl+h")
         context_menu.addAction(ViewHistory)
 
-        # Open page
-        OpenPgAction = QAction("Open", self)
+        OpenPgAction = QAction("திற", self)
         OpenPgAction.setIcon(
             QtGui.QIcon(os.path.join("resources", "icons", "openclickhtml.png"))
         )
-        OpenPgAction.setToolTip("Open a file in this browser")
+        OpenPgAction.setToolTip("கோப்பை உலாவியில் திறக்க")
         OpenPgAction.setShortcut("Ctrl+O")
         OpenPgAction.triggered.connect(self.open_local_file)
         context_menu.addAction(OpenPgAction)
 
-        # Save page as
-        SavePageAs = QAction("Save page as", self)
+        SavePageAs = QAction("பக்கத்தைச் சேமி", self)
         SavePageAs.setIcon(
             QtGui.QIcon(os.path.join("resources", "icons", "save-disk.png"))
         )
-        SavePageAs.setToolTip("Save current page to this device")
+        SavePageAs.setToolTip("நடப்புப் பக்கத்தைச் சாதனத்தில் சேமிக்க")
         SavePageAs.setShortcut("Ctrl+S")
         SavePageAs.triggered.connect(self.save_page)
         context_menu.addAction(SavePageAs)
 
-        # Print this page action
-        PrintThisPageAction = QAction("Print this page", self)
+        PrintThisPageAction = QAction("பக்கத்தை அச்சிடுக", self)
         PrintThisPageAction.setIcon(
             QtGui.QIcon(os.path.join("resources", "icons", "printer.png"))
         )
         PrintThisPageAction.triggered.connect(self.print_this_page)
         PrintThisPageAction.setShortcut("Ctrl+P")
-        PrintThisPageAction.setToolTip("Print current page")
+        PrintThisPageAction.setToolTip("நடப்புப் பக்கத்தை அச்சிட")
         context_menu.addAction(PrintThisPageAction)
 
-        # Print with preview
         PrintPageWithPreview = QAction(
             QtGui.QIcon(os.path.join("resources", "icons", "printerprev.png")),
-            "Print page with preview",
+            "அச்சு முன்னோட்டம்",
             self,
         )
         PrintPageWithPreview.triggered.connect(self.PrintWithPreview)
         PrintPageWithPreview.setShortcut("Ctrl+Shift+P")
         context_menu.addAction(PrintPageWithPreview)
 
-        # Save page as PDF
         SavePageAsPDF = QAction(
             QtGui.QIcon(os.path.join("resources", "icons", "adobepdf.png")),
-            "Save as PDF",
+            "பிடிஎஃப் ஆகச் சேமித்திடுக",
             self,
         )
         SavePageAsPDF.triggered.connect(self.save_as_pdf)
@@ -318,69 +284,44 @@ class mainWindow(QMainWindow):
 
         context_menu.addSeparator()
 
-        # Settings widget:
         userSettingsAction = QAction(
             QtGui.QIcon(os.path.join("resources", "icons", "settings.png")),
-            "Settings",
+            "அமைப்புகள்",
             self,
         )
         userSettingsAction.triggered.connect(self.openSettings)
         context_menu.addAction(userSettingsAction)
 
-        # The help submenu
-        HelpMenu = QMenu("Help", self)
+        # Help Menu ("உதவி")
+        HelpMenu = QMenu("உதவி", self)
         HelpMenu.setObjectName("HelpMenu")
         HelpMenu.setIcon(QIcon(os.path.join("resources", "icons", "question.png")))
 
-        # About action
-        AboutAction = QAction("About this browser", self)
+        AboutAction = QAction("அறிமுகம்", self)
         AboutAction.setIcon(QIcon(os.path.join("resources", "icons", "info.png")))
         AboutAction.triggered.connect(self.about)
         HelpMenu.addAction(AboutAction)
 
-        # Visit action
-        VisitGithubAction = QAction("Visit Github", self)
+        VisitGithubAction = QAction("திட்டப் பக்கம் செல்ல", self)
         VisitGithubAction.triggered.connect(self.visitGithub)
         HelpMenu.addAction(VisitGithubAction)
 
         context_menu.addMenu(HelpMenu)
-
-        # Add a separator
         context_menu.addSeparator()
 
-        # Close browser
-        CloseBrowser = QAction("Close browser", self)
+        CloseBrowser = QAction("உலாவியை மூடுக", self)
         CloseBrowser.triggered.connect(lambda: sys.exit())
         context_menu.addAction(CloseBrowser)
 
-        """ 
-        Set menu for the button
-        ContextMenuButton.add
-        Add the context menu to the navbar
-        """
-
         self.navbar.addWidget(ContextMenuButton)
 
-        # Stuffs to see at startup
-        self.add_new_tab(QUrl(browser.settings_data["startupPage"]), "Homepage")
+        # Startup tab
+        self.add_new_tab(QUrl(browser.settings_data["startupPage"]), "முகப்பு")
 
-        # Set the address focus
         self.url_bar.setFocus()
-
-        # what to display on the window
         self.setCentralWidget(self.tabs)
-
-        # Stuffs to set the window
         self.showMaximized()
-
-        # Set minimum size
         self.setMinimumWidth(400)
-
-    """
-    Instead of managing 2 slots associated with the progress and completion of loading,
-    only one of them should be used since, for example, the associated slot is also called when
-    it is loaded at 100% so it could be hidden since it can be invoked together with finished.
-    """
 
     @QtCore.pyqtSlot(int)
     def loadProgressHandler(self, prog):
@@ -388,72 +329,47 @@ class mainWindow(QMainWindow):
             return
 
         loading = prog < 100
-
         self.stop_action.setVisible(loading)
         self.reload_action.setVisible(not loading)
 
-    # funcion to navigate to home when home icon is pressed
-
     def goToHome(self):
         self.tabs.currentWidget().setUrl(QUrl(browser.settings_data["homeButtonPage"]))
-
-    # Define open a new window
 
     def CreateNewWindow(self):
         window = mainWindow()
         window.show()
 
-    # Copy url of currently viewed page to clipboard
     def CopySiteLink(self):
         pc.copy(self.tabs.currentWidget().url().toString())
-
-    # Adds a new tab and load the content of the clipboard
 
     def PasteUrlAndGo(self):
         self.add_new_tab(QUrl(pc.paste()), self.tabs.currentWidget().title())
 
-    # Remove this if you don't need it
-
     def visitGithub(self):
         self.add_new_tab(
-            QUrl("https://github.com/saminsakur/PyQt5BrowserBuild"), "Github"
+            QUrl("https://github.com/smartsw33t/TamilPythonBrowser"), "கிட்ஹப்"
         )
-
-    # navigate backward tab
 
     def navigate_back_tab(self):
         self.tabs.currentWidget().back()
 
-    # go forward tab
-
     def forward_tab(self):
         self.tabs.currentWidget().forward()
-
-    # reload tab
 
     def reload_tab(self):
         self.tabs.currentWidget().reload()
 
-    # stop load current tab
-
     def stop_loading_tab(self):
         if self.tabs.currentWidget() is None:
             return
-
         self.tabs.currentWidget().stop()
-
-    """
-    Functions to open a local file and save a website to user's local storage
-    """
-
-    # Function to open a local file
 
     def open_local_file(self):
         filename, _ = QFileDialog.getOpenFileName(
             parent=self,
-            caption="Open file",
+            caption="கோப்பைத் திறந்திடுக",
             directory="",
-            filter="Hypertext Markup Language (*.htm *.html *.mhtml);;All files (*.*)",
+            filter="வலைப்பக்கக் கோப்புகள் (*.htm *.html *.mhtml);;அனைத்துக் கோப்புகள் (*.*)",
         )
         if filename:
             try:
@@ -467,22 +383,20 @@ class mainWindow(QMainWindow):
 
         self.url_bar.setText(filename)
 
-    # Function to save current site to user's local storage
-
     def save_page(self):
         filepath, filter = QFileDialog.getSaveFileName(
             parent=self,
-            caption="Save Page As",
+            caption="பக்கத்தைச் சேமித்திடுக",
             directory="",
-            filter="Webpage, complete (*.htm *.html);;Hypertext Markup Language (*.htm *.html);;All files (*.*)",
+            filter="முழுமையான வலைப்பக்கம் (*.htm *.html);;வலைப்பக்கக் கோப்புகள் (*.htm *.html);;அனைத்துக் கோப்புகள் (*.*)",
         )
         try:
-            if filter == "Hypertext Markup Language (*.htm *.html)":
+            if filter == "வலைப்பக்கக் கோப்புகள் (*.htm *.html)":
                 self.tabs.currentWidget().page().save(
                     filepath, format=QWebEngineDownloadItem.MimeHtmlSaveFormat
                 )
 
-            elif filter == "Webpage, complete (*.htm *.html)":
+            elif filter == "முழுமையான வலைப்பக்கம் (*.htm *.html)":
                 self.tabs.currentWidget().page().save(
                     filepath, format=QWebEngineDownloadItem.CompleteHtmlSaveFormat
                 )
@@ -490,7 +404,6 @@ class mainWindow(QMainWindow):
         except:
             self.showErrorDlg()
 
-    # Print handler
     def print_this_page(self):
         try:
             handler_print = browser.printer.PrintHandler()
@@ -500,71 +413,59 @@ class mainWindow(QMainWindow):
         except:
             self.showErrorDlg()
 
-    # Print page with preview
     def PrintWithPreview(self):
         handler = browser.printer.PrintHandler()
         handler.setPage(self.tabs.currentWidget().page())
         handler.printPreview()
 
-    # Save as pdf
     def save_as_pdf(self):
         filename, filter = QFileDialog.getSaveFileName(
-            parent=self, caption="Save as", filter="PDF File (*.pdf);;All files (*.*)"
+            parent=self,
+            caption="பிடிஎஃப் ஆகச் சேமித்திடுக",
+            filter="பிடிஎஃப் ஆவணம் (*.pdf);;அனைத்துக் கோப்புகள் (*.*)"
         )
 
         self.tabs.currentWidget().page().printToPdf(filename)
 
-    # doubleclick on empty space for new tab
     def tab_open_doubleclick(self, i):
-        if i == -1:  # No tab under the click
-            self.add_new_tab(QUrl(browser.settings_data["newTabPage"]), label="New tab")
+        if i == -1:
+            self.add_new_tab(QUrl(browser.settings_data["newTabPage"]), label="புதிய சாளரப்பிரிவு")
 
-    # to update the tab
     def tab_changed(self, i):
         qurl = self.tabs.currentWidget().url()
         self.update_urlbar(qurl, self.tabs.currentWidget())
         self.update_title(self.tabs.currentWidget())
 
-    # to close current tab
     def close_current_tab(self, i):
         if self.tabs.count() < 2:
             self.close()
 
         self.tabs.removeTab(i)
 
-    # Update window title
-    def update_title(self, browser):
-        if browser != self.tabs.currentWidget():
+    def update_title(self, browser_widget):
+        if browser_widget != self.tabs.currentWidget():
             return
 
         title = self.tabs.currentWidget().page().title()
 
-        if 0 > len(title):
-            self.setWindowTitle("{} - Simple Web Browser".format(title))
-
+        if len(title) > 0:
+            self.setWindowTitle(f"{title} - தமிழ் உலாவி")
         else:
-            self.setWindowTitle("Simple Web Browser")
+            self.setWindowTitle("தமிழ் உலாவி")
 
-    # function to add new tab
-    def add_new_tab(self, qurl=None, label="Blank"):
+    def add_new_tab(self, qurl=None, label="காலி சாளரப்பிரிவு"):
         if qurl is None:
             qurl = QUrl(browser.settings_data["newTabPage"])
 
-        _browser = QWebEngineView()  # Define the main webview to browser the internet
+        _browser = QWebEngineView()
 
-        # Set page
         _browser.setPage(browser.widgets.customWebEnginePage(_browser))
-
-        # Full screen enable
         _browser.settings().setAttribute(
             QWebEngineSettings.FullScreenSupportEnabled, True
         )
         _browser.page().fullScreenRequested.connect(lambda request: request.accept())
-
         _browser.loadProgress.connect(self.loadProgressHandler)
-
         _browser.page().WebAction()
-
         _browser.settings().setAttribute(QWebEngineSettings.ScreenCaptureEnabled, True)
 
         i = self.tabs.addTab(_browser, label)
@@ -573,7 +474,6 @@ class mainWindow(QMainWindow):
         _browser.load(qurl)
         self.url_bar.setFocus()
 
-        # update url when it's from the correct tab
         _browser.urlChanged.connect(
             lambda qurl, browser=_browser: self.update_urlbar(qurl, browser)
         )
@@ -584,7 +484,6 @@ class mainWindow(QMainWindow):
             )
         )
 
-        # update history when loading finished
         _browser.page().loadFinished.connect(self.updateHistory)
 
     def showErrorDlg(self):
@@ -595,86 +494,60 @@ class mainWindow(QMainWindow):
         self.AboutDialogue = browser.about.AboutDialog()
         self.AboutDialogue.show()
 
-    # Update address bar to show current pages's url
     def update_urlbar(self, q, _browser=None):
         if _browser != self.tabs.currentWidget():
-            # if signal is not from the current tab, then ignore
             return
 
         if q.toString() == browser.settings_data["newTabPage"]:
             self.httpsicon.setPixmap(
                 QPixmap(os.path.join("resources", "icons", "info_24.png"))
             )
-            self.httpsicon.setToolTip("This is browser's new tab page")
+            self.httpsicon.setToolTip("இது உலாவியின் புதிய சாளரப்பிரிவு பக்கம்")
             self.url_bar.clear()
 
         else:
             if q.scheme() == "https":
-                # secure padlock icon
                 self.httpsicon.setPixmap(
                     QPixmap(os.path.join("resources", "icons", "security.png"))
                 )
                 self.httpsicon.setToolTip(
-                    "Connection to this is is secure\n\nThis site have a valid certificate"
+                    "இத்தளத்துடனான இணைப்பு பாதுகாப்பானது\n\nசெல்லுபடியாகும் சான்றிதழ் உள்ளது"
                 )
 
-            elif q.scheme() == "file":
+            elif q.scheme() in ("file", "data"):
                 self.httpsicon.setPixmap(
                     QPixmap(os.path.join("resources", "icons", "info_24.png"))
                 )
-                self.httpsicon.setToolTip("You are viewing a local or shared file")
-
-            elif q.scheme() == "data":
-                self.httpsicon.setPixmap(
-                    QPixmap(os.path.join("resources", "icons", "info_24.png"))
-                )
-                self.httpsicon.setToolTip("You are viewing a local or shared file")
+                self.httpsicon.setToolTip("நீங்கள் சாதனத்தினுள் உள்ள அல்லது பகிரப்பட்ட கோப்பைப் பார்க்கிறீர்கள்")
 
             else:
-                # Set insecure padlock
                 self.httpsicon.setPixmap(
                     QPixmap(os.path.join("resources", "icons", "warning.png"))
                 )
-                self.httpsicon.setToolTip("Connection to this site may not be secured")
-
-        # if q.toString() == browser.settings_data["newTabPage"]:
-        #     self.url_bar.clear()
+                self.httpsicon.setToolTip("இத்தளத்துடனான இணைப்பு பாதுகாப்பற்றதாக இருக்கலாம்")
 
         self.url_bar.setCursorPosition(0)
 
-    # function to search google from the search box
     def searchWeb(self, text):
         Engine = browser.settings_data["defaultSearchEngine"]
         if text:
             if Engine == "Google":
                 return "https://www.google.com/search?q=" + "+".join(text.split())
-
             elif Engine == "Yahoo":
                 return "https://search.yahoo.com/search?q=" + "+".join(text.split())
-
             elif Engine == "Bing":
                 return "https://www.bing.com/search?q=" + "+".join(text.split())
-
             elif Engine == "DuckDuckGo":
                 return "https://duckduckgo.com/?q=" + "+".join(text.split())
-
-    """
-    function to navigate to url, if the url ends with the domains from the domains tuple,
-    then "http://" will be added after what the user have written if not, then it will call
-    the searchWeb() function to search bing directly from the search box
-    """
 
     def navigate_to_url(self):
         in_url = self.url_bar.text()
         url = ""
-        """ if the text in the search box endswith one of the domain in the domains tuple, then "http://" will be added
-         if the text is pre "http://" or "https://" added, then not"""
-        # [0-9A-Za-z]+\.+[A-Za-z0-9]{2}
+
         if len(str(in_url)) < 1:
             return
 
-        if self.tabs.currentWidget is None:  # To avoid exception
-            # If QTabWidget's currentwidget is none, the ignore
+        if self.tabs.currentWidget() is None:
             return
 
         if file_pattern.search(in_url):
@@ -692,8 +565,7 @@ class mainWindow(QMainWindow):
         ):
             url = "http://" + in_url
 
-        # this will search google
-        elif not "/" in in_url:
+        elif "/" not in in_url:
             url = self.searchWeb(in_url)
 
         self.tabs.currentWidget().load(QUrl.fromUserInput(url))
@@ -744,4 +616,3 @@ class mainWindow(QMainWindow):
         self.userSettingswindow = browser.settings.UserSettings()
         self.userSettingswindow.setWindowFlag(Qt.MSWindowsFixedSizeDialogHint)
         self.userSettingswindow.show()
-
