@@ -51,12 +51,12 @@ QMenu#HelpMenu {
 QMenu#ContextMenu::item,
 QMenu#HelpMenu::item {
   background-color: transparent;
-  font-size: 10pt;
-  padding-left: 40px;
+  font-size: 12pt;
+  padding-left: 20px;
   padding-right: 20px;   /* Reduced padding so text has room on the right */
-  padding-top: 8px;
-  padding-bottom: 8px;
-  min-width: 240px;      /* Changed 'width' to 'min-width' and increased the size */
+  padding-top: 10px;
+  padding-bottom: 10px;
+  min-width: 350px;      /* Changed 'width' to 'min-width' and increased the size */
 }
 
 
