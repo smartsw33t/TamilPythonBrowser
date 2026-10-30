@@ -205,7 +205,7 @@ class mainWindow(QMainWindow):
         CloseTabAction.triggered.connect(
             lambda: self.close_current_tab(self.tabs.currentIndex())
         )
-        CloseTabAction.setToolTip("நடப்பு சாளரப்பிரிவை மூட")
+        CloseTabAction.setToolTip("நடப்பு சாளரப்பிரிவை மூடுக")
         context_menu.addAction(CloseTabAction)
 
         context_menu.addSeparator()
@@ -222,7 +222,7 @@ class mainWindow(QMainWindow):
 
         PasteAndGo = QAction(
             QtGui.QIcon(os.path.join("resources", "icons", "paste.png")),
-            "ஒட்டிச் செல்",
+            "ஒட்டிச் செல்க",
             self,
         )
         PasteAndGo.triggered.connect(self.PasteUrlAndGo)
@@ -238,7 +238,7 @@ class mainWindow(QMainWindow):
         ViewHistory.setShortcut("Ctrl+h")
         context_menu.addAction(ViewHistory)
 
-        OpenPgAction = QAction("திற", self)
+        OpenPgAction = QAction("திறந்திடுக", self)
         OpenPgAction.setIcon(
             QtGui.QIcon(os.path.join("resources", "icons", "openclickhtml.png"))
         )
@@ -247,7 +247,7 @@ class mainWindow(QMainWindow):
         OpenPgAction.triggered.connect(self.open_local_file)
         context_menu.addAction(OpenPgAction)
 
-        SavePageAs = QAction("பக்கத்தைச் சேமி", self)
+        SavePageAs = QAction("பக்கத்தைச் சேமித்திடுக", self)
         SavePageAs.setIcon(
             QtGui.QIcon(os.path.join("resources", "icons", "save-disk.png"))
         )
