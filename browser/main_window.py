@@ -188,7 +188,7 @@ class mainWindow(QMainWindow):
                 QUrl(browser.settings_data["newTabPage"]), "முகப்பு"
             )
         )
-        newTabAction.setToolTip("புதிய சாளரப்பிரிவைத் திறக்க")
+        newTabAction.setToolTip("புதிய சாளரப்பிரிவைத் திறந்திடுக")
         context_menu.addAction(newTabAction)
 
         newWindowAction = QAction("புதிய சாளரம்", self)
@@ -213,11 +213,11 @@ class mainWindow(QMainWindow):
 
         CopySiteAddress = QAction(
             QtGui.QIcon(os.path.join("resources", "icons", "url.png")),
-            "தளத்தின் பிணைப்பை நகலெடு",
+            "பிணைப்பை நகலெடுத்திடுக",
             self,
         )
         CopySiteAddress.triggered.connect(self.CopySiteLink)
-        CopySiteAddress.setToolTip("நடப்புத் தளத்தின் பிணைப்பை நகலெடுக்க")
+        CopySiteAddress.setToolTip("இந்தத் தளத்தின் பிணைப்பை நகலெடுக்க")
         context_menu.addAction(CopySiteAddress)
 
         PasteAndGo = QAction(
