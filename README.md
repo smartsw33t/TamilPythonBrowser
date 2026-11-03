@@ -1,6 +1,6 @@
 # PyQt5 Simple Web Browser
 
-![Screenshot](./browser_screenshot)
+![Screenshot](browser_screenshot](https://github.com/smartsw33t/TamilPythonBrowser/blob/master/browser_screenshot.jpg))
 
 A tabbed browser created by me with Python, PyQt5 module with a bunch of features.
 
