@@ -1,34 +1,39 @@
-# PyQt5 Simple Web Browser
 
-![Screenshot](browser_screenshot](https://github.com/smartsw33t/TamilPythonBrowser/blob/master/browser_screenshot.jpg))
+# PyQt5 எளிய வலை உலாவி
 
-A tabbed browser created by me with Python, PyQt5 module with a bunch of features.
+![திரைப்பிடிப்பு](https://raw.githubusercontent.com/smartsw33t/TamilPythonBrowser/master/browser_screenshot.jpg)
 
-Tested on:  
-Python version: Python 3.9 (64 bit)  
-PyQt5 version: 5.15.4
+பைதான் மற்றும் PyQt5 தொகுதியைக் கொண்டு என்னால் உருவாக்கப்பட்ட, பல சிறப்பம்சங்களைக் கொண்ட தத்தல் (tabbed) வலை உலாவி.
 
-### Install dependencies</h3>
+பரிசோதிக்கப்பட்ட சூழல்:  
+பைதான் பதிப்பு: Python 3.9 (64 bit)  
+PyQt5 பதிப்பு: 5.15.4
 
+### தேவைகளை நிறுவ
 
-```
+```bash
 python -m pip install -r requirements.txt
-```
-
-### Run python file
 
 ```
+
+### பைதான் கோப்பை இயக்க
+
+```bash
 python main.py
+
 ```
 
-### Some features:
+### சில சிறப்பம்சங்கள்:
 
-- Work with multiple tabs. Double click on tab bar to open a new
-- Search Google right from the address bar
-- Open local files
-- save webpages as html
-- Save as pdf
-- Print webpages
-- Copy site url to clipboard feature
-- Paste and go feature
-- Customize default search engine, startup page and new tab page
+* பல தத்தல்களில் வேலை செய்யும் வசதி. புதிய தத்தலைத் திறக்க தத்தல் பட்டை மீது இருமுறை சொடுக்கவும்
+* முகவரிப் பட்டையிலிருந்தே நேரடியாக கூகுளில் தேடலாம்
+* கணினியில் உள்ள கோப்புகளைத் திறக்கலாம்
+* வலைப்பக்கங்களை html வடிவில் சேமிக்கலாம்
+* pdf வடிவில் சேமிக்கலாம்
+* வலைப்பக்கங்களை அச்சிடலாம்
+* தளத்தின் முகவரியை நினைவகத்திற்கு நகலெடுக்கும் வசதி
+* ஒட்டி உடனே செல்லும் வசதி
+* முன்னிருப்புத் தேடுபொறி, தொடக்கப் பக்கம் மற்றும் புதிய தத்தல் பக்கத்தை விருப்பப்படி மாற்றியமைக்கும் வசதி
+
+```
+
