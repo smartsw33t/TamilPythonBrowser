@@ -1,6 +1,6 @@
 # PyQt5 Simple Web Browser
 
-![Screenshot](./browser_screenshot.jpg)
+![Screenshot](./browser_screenshot)
 
 A tabbed browser created by me with Python, PyQt5 module with a bunch of features.
 
